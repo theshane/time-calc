@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+            h2, h1{
+            margin: 2px;
+            }
+        </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+    $("#start-hour").val(moment().format('HH'));
+    $("#start-min").val(moment().format('mm'));
+    $("#calculate").click(function() {
+        var start_hour = parseInt($("#start-hour").val());
+        var start_min = parseInt($("#start-min").val());
+        var firstHourInterval = parseInt($("#first-hour-interval").val());
+        var nextHourInterval = parseInt($("#next-hour-interval").val());
+        var hours = parseInt($("#hours").val());;
+        var startTime = moment(start_hour + ":" + start_min, "HH:mm");
+        var result = ['<h1>First Hour</h1>'];
+        var newTime = startTime;
+        var firstHourRuns = 60/firstHourInterval;
+        var nextHourRuns = (hours*60)/nextHourInterval;
+        for(var i = 1; i <= firstHourRuns; i++){
+        newTime = newTime.add(firstHourInterval, 'm');
+        result.push('<h2>'+newTime.format(newTime.format('HH:mm'))+'</h2>');
+        }
+        result.push('<h1>After First Hour<h1>');
+        for(var i = 1; i <= nextHourRuns; i++){
+        newTime = newTime.add(nextHourInterval, 'm');
+        result.push('<h2>'+newTime.format(newTime.format('HH:mm'))+'</h2>');
+        }
+        $("#result").html(result.join("<br>"));
+  });
+
+});
+        </script>
+    </head>
+<body>
+    <div class="container">
+        <div class="row">
+          <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <label>Start Hour</label>
+          </div>
+          <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <label>Start Minute</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <input id="start-hour" class="form-control" type="number">
+          </div>
+          <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <input id="start-min" class="form-control" type="number">
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <label>First Hour Interval</label>
+          </div>
+          <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <label>After First Hour Interval</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <input id="first-hour-interval" class="form-control" type="number" value=15>
+          </div>
+           <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <input id="next-hour-interval" class="form-control" type="number" value=30>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+          <label>Total Hours</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+           <input id="hours" class="form-control" type="number" value=3>
+          </div>
+        </div>
+        <br>
+        <br>
+        <span class="pull-right">
+          <button class="btn btn-primary" id="calculate">Calculate</button>
+        </span>
+        <br>
+        <hr>
+        <div class="pull-left">
+          <div id="result"></div>
+        </div>
+      </div>
+</body>
+</html>
